@@ -9,12 +9,15 @@ function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
 
 function runAnalysis() {
   // Write code here to analyze stuff
-const [testSet, trainingSet]= splitDataset(outputs, 10);
-for (let i = 0; i < testSet.length; i++) {
- const bucket =  knn(trainingSet, testSet[i][0])
- console.log(bucket)
-  
-}
+  const testSetSize= 10
+const [testSet, trainingSet]= splitDataset(outputs, testSetSize);
+
+const accuracy = _.chain(testSet)
+.filter(testPoint => knn(trainingSet, testPoint[0]) === testPoint[3])
+.size()
+.divide(testSetSize)
+.value();
+console.log(accuracy)
 } 
 function distance(pointA, pointB) {
   return Math.abs(pointA-pointB)
