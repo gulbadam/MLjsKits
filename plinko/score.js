@@ -8,15 +8,18 @@ function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
 
 function runAnalysis() {
   // Write code here to analyze stuff
-  const testSetSize= 10
-const [testSet, trainingSet]= splitDataset(outputs, testSetSize);
-_.range(1, 15).forEach(k => {
+  const testSetSize= 100
+  const k =10;
+
+_.range(0, 3).forEach(feature => {
+const data = _.map(outputs, row=>[row[feature], _.last(row)])
+const [testSet, trainingSet] = splitDataset(minMax(data, 1), testSetSize);
 const accuracy = _.chain(testSet)
-.filter(testPoint => knn(trainingSet, _.initial(testPoint), k) === testPoint[3])
+.filter(testPoint => knn(trainingSet, _.initial(testPoint), k) === _.last(testPoint))
 .size()
 .divide(testSetSize)
 .value();
-console.log(accuracy, k)
+console.log(accuracy, feature)
 });
 } 
 function distance(pointA, pointB) {
