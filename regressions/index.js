@@ -16,4 +16,4 @@ let {
 const regression = new LinearRegression(features,
     labels,{learningRate: 0.001, iterations: 1} );
     regression.train();
-    console.log("M", regression.m, "b", regression.b)
+    console.log("M", regression.weights.get(1, 0), "b", regression.weights.get(0, 0))
